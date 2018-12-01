@@ -8,7 +8,7 @@ public class TileData : MonoBehaviour {
     public int initRainValue = 100;
     public int[] rainStages = { 100 };
 
-    public float dataTimeMuliplier = 10f;
+    public float dataTimeMuliplier = 5f;
 
     private SpriteRenderer spriteRenderer;
     private TileMouseDetector mouseDetector;
@@ -24,7 +24,7 @@ public class TileData : MonoBehaviour {
 
         //Update Values
         if (mouseDetector.MouseIsOver && Input.GetMouseButton(0)) {
-            rainValue = rainValue + (Time.deltaTime * dataTimeMuliplier * 15);
+            rainValue = rainValue + (Time.deltaTime * dataTimeMuliplier * 7);
         } else {
             rainValue = Mathf.Max(0, rainValue - (Time.deltaTime * dataTimeMuliplier));
         }
