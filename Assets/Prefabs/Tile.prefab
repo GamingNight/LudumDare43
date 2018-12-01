@@ -103,7 +103,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: da84e77a16666b64f9bbfe868d670007, type: 3}
   initRainValue: 150
   rainStages: 64000000
-  dataDropRate: 10
+  dataTimeMuliplier: 10
 --- !u!212 &212106276395914424
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,22 +7,29 @@ public class TileData : MonoBehaviour {
     public Sprite[] rainSprites;
     public int initRainValue = 100;
     public int[] rainStages = { 100 };
-    /// <summary>
-    /// Data drops at rate *this per second*
-    /// </summary>
-    public float dataDropRate = 0.1f;
+
+    public float dataTimeMuliplier = 10f;
 
     private SpriteRenderer spriteRenderer;
+    private TileMouseDetector mouseDetector;
     private float rainValue;
 
     void Start() {
         rainValue = initRainValue;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        mouseDetector = GetComponent<TileMouseDetector>();
     }
 
     void Update() {
 
-        rainValue = Mathf.Max(0, rainValue - (Time.deltaTime * dataDropRate));
+        //Update Values
+        if (mouseDetector.MouseIsOver && Input.GetMouseButton(0)) {
+            rainValue = rainValue + (Time.deltaTime * dataTimeMuliplier * 4);
+        } else {
+            rainValue = Mathf.Max(0, rainValue - (Time.deltaTime * dataTimeMuliplier));
+        }
+
+        //Update Sprites
         int i = 0;
         while (i < rainStages.Length && rainValue > rainStages[i]) {
             i++;
