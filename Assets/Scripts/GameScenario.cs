@@ -32,7 +32,7 @@ public class GameScenario : MonoBehaviour {
 
     private void InitOneTileState() {
         mapManager.HideAllTiles();
-        mapManager.ShowOneTile();
+        mapManager.ShowTile(mapManager.mapSize / 2, mapManager.mapSize / 2);
     }
 
     private void InitCrossedTilesState() {
@@ -53,11 +53,22 @@ public class GameScenario : MonoBehaviour {
 
     private IEnumerator TilesActivationCoroutine(float lerpDuration) {
 
-        mapManager.SetCrossedTilesTransparency(0);
-        mapManager.ShowCrossedTiles();
+        int middleMap = mapManager.mapSize / 2;
+        mapManager.SetTileTransparency(middleMap + 1, middleMap, 0);
+        mapManager.SetTileTransparency(middleMap - 1, middleMap, 0);
+        mapManager.SetTileTransparency(middleMap, middleMap + 1, 0);
+        mapManager.SetTileTransparency(middleMap, middleMap - 1, 0);
+        mapManager.ShowTile(middleMap + 1, middleMap);
+        mapManager.ShowTile(middleMap - 1, middleMap);
+        mapManager.ShowTile(middleMap, middleMap + 1);
+        mapManager.ShowTile(middleMap, middleMap - 1);
         float interpolation = 0;
         while ((interpolation / lerpDuration) != 1) {
-            mapManager.SetCrossedTilesTransparency(Mathf.Lerp(0, 1, interpolation / lerpDuration));
+            float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
+            mapManager.SetTileTransparency(middleMap + 1, middleMap, lerpValue);
+            mapManager.SetTileTransparency(middleMap - 1, middleMap, lerpValue);
+            mapManager.SetTileTransparency(middleMap, middleMap + 1, lerpValue);
+            mapManager.SetTileTransparency(middleMap, middleMap - 1, lerpValue);
             interpolation += 0.05f;
             yield return new WaitForSeconds(0.05f);
         }
