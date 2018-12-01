@@ -22,8 +22,9 @@ GameObject:
   - component: {fileID: 212106276395914424}
   - component: {fileID: 60039430215068624}
   - component: {fileID: 114446590445165198}
+  - component: {fileID: 114471567718419664}
   m_Layer: 0
-  m_Name: Tile100
+  m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +59,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 4}
+    oldSize: {x: 5, y: 6.4}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -86,6 +87,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cea40ada875ec4e9b4993dce68813d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114471567718419664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1115134044124316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6cbaabdef0f0c47af245889e0cfed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rainSprites:
+  - {fileID: 21300000, guid: 84e7b89464d3cd541b85726719256e63, type: 3}
+  - {fileID: 21300000, guid: 9206046e34cfcf34abaf1dbdcc916027, type: 3}
+  initRainValue: 150
+  rainStages: 64000000
+  dataDropTime: 10
 --- !u!212 &212106276395914424
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -121,8 +139,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 84e7b89464d3cd541b85726719256e63, type: 3}
-  m_Color: {r: 0.090334624, g: 0.5471698, b: 0.12681888, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9206046e34cfcf34abaf1dbdcc916027, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

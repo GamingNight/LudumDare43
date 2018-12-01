@@ -156,12 +156,7 @@ MonoBehaviour:
   mapSize: 5
   tileHeight: 4
   tileWidth: 5
-  defaultTilePrefab: {fileID: 1115134044124316, guid: 71a6d686f1644574e91f807e7b1a3cb6,
-    type: 2}
-  tile0Prefab: {fileID: 1785757220141230, guid: e713e04efa65af2429cbb1760edd0f6e,
-    type: 2}
-  tile100Prefab: {fileID: 1115134044124316, guid: 71a6d686f1644574e91f807e7b1a3cb6,
-    type: 2}
+  tilePrefab: {fileID: 1115134044124316, guid: 71a6d686f1644574e91f807e7b1a3cb6, type: 2}
   selectorPrefab: {fileID: 1327047437622108, guid: 926313538ac3a8e41a0633dd3671c585,
     type: 2}
 --- !u!1 &1131378329
