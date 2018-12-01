@@ -9,16 +9,20 @@ public class MapManager : MonoBehaviour {
     public float tileWidth = 5;
     public GameObject tilePrefab;
     public GameObject selectorPrefab;
+    public GameObject rainEffectPrefab;
 
     private GameObject[][] map;
     public GameObject[][] Map { get { return map; } }
     private GameObject selector;
+    private GameObject rainEffect;
 
     void Start() {
 
         GenerateMap();
         selector = Instantiate<GameObject>(selectorPrefab);
         selector.SetActive(false);
+        rainEffect = Instantiate<GameObject>(rainEffectPrefab);
+        rainEffect.GetComponentInChildren<ParticleSystem>().Stop();
     }
 
     private void GenerateMap() {
@@ -73,13 +77,22 @@ public class MapManager : MonoBehaviour {
                 if (mouseDetector.MouseIsOver) {
                     selector.transform.position = map[i][j].transform.position;
                     selector.SetActive(true);
+                    rainEffect.transform.position = map[i][j].transform.position;
                     mouseDetected = true;
                 }
                 j++;
             }
             i++;
         }
-        if (!mouseDetected)
+        if (!mouseDetected) {
             selector.SetActive(false);
+        }
+
+        if (mouseDetected && Input.GetMouseButton(0)) {
+            if (!rainEffect.GetComponentInChildren<ParticleSystem>().isPlaying)
+                rainEffect.GetComponentInChildren<ParticleSystem>().Play();
+        } else {
+            rainEffect.GetComponentInChildren<ParticleSystem>().Stop();
+        }
     }
 }
