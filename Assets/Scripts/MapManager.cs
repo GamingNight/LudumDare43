@@ -59,7 +59,8 @@ public class MapManager : MonoBehaviour {
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
                 int pickedIndex = Random.Range(0, rainValues.Count);
-                map[i][j].GetComponent<TileData>().initRainValue = rainValues[pickedIndex];
+                //map[i][j].GetComponent<TileData>().initRainValue = rainValues[pickedIndex];
+                map[i][j].GetComponent<TileData>().initRainValue = 0;
                 rainValues.RemoveAt(pickedIndex);
             }
         }
@@ -93,6 +94,16 @@ public class MapManager : MonoBehaviour {
                 rainEffect.GetComponentInChildren<ParticleSystem>().Play();
         } else {
             rainEffect.GetComponentInChildren<ParticleSystem>().Stop();
+        }
+    }
+
+    public void ShowOneTile() {
+
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                if (i != mapSize / 2 || j != mapSize / 2)
+                    map[i][j].SetActive(false);
+            }
         }
     }
 }
