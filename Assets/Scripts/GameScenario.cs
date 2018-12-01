@@ -31,11 +31,13 @@ public class GameScenario : MonoBehaviour {
     }
 
     private void InitOneTileState() {
+        mapManager.HideAllTiles();
         mapManager.ShowOneTile();
     }
 
     private void InitCrossedTilesState() {
         StartCoroutine(CameraUnzoomCoroutine(5f, 2f));
+        StartCoroutine(TilesActivationCoroutine(2f));
     }
 
     private IEnumerator CameraUnzoomCoroutine(float targetSize, float zoomDuration) {
@@ -44,6 +46,18 @@ public class GameScenario : MonoBehaviour {
         float interpolation = 0;
         while (Camera.main.orthographicSize != targetSize) {
             Camera.main.orthographicSize = Mathf.Lerp(initSize, targetSize, interpolation / zoomDuration);
+            interpolation += 0.05f;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    private IEnumerator TilesActivationCoroutine(float lerpDuration) {
+
+        mapManager.SetCrossedTilesTransparency(0);
+        mapManager.ShowCrossedTiles();
+        float interpolation = 0;
+        while ((interpolation / lerpDuration) != 1) {
+            mapManager.SetCrossedTilesTransparency(Mathf.Lerp(0, 1, interpolation / lerpDuration));
             interpolation += 0.05f;
             yield return new WaitForSeconds(0.05f);
         }

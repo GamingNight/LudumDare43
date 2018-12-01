@@ -97,13 +97,34 @@ public class MapManager : MonoBehaviour {
         }
     }
 
-    public void ShowOneTile() {
-
+    public void HideAllTiles() {
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                if (i != mapSize / 2 || j != mapSize / 2)
-                    map[i][j].SetActive(false);
+                map[i][j].SetActive(false);
             }
         }
+    }
+
+    public void ShowOneTile() {
+
+        map[mapSize / 2][mapSize / 2].SetActive(true);
+    }
+
+    public void ShowCrossedTiles() {
+        map[mapSize / 2][mapSize / 2 + 1].SetActive(true);
+        map[mapSize / 2][mapSize / 2 - 1].SetActive(true);
+        map[mapSize / 2 + 1][mapSize / 2].SetActive(true);
+        map[mapSize / 2 - 1][mapSize / 2].SetActive(true);
+    }
+
+    public void SetCrossedTilesTransparency(float alpha) {
+        Color yPlus1Color = map[mapSize / 2][mapSize / 2 + 1].GetComponent<SpriteRenderer>().color;
+        map[mapSize / 2][mapSize / 2 + 1].GetComponent<SpriteRenderer>().color = new Color(yPlus1Color.r, yPlus1Color.g, yPlus1Color.b, alpha);
+        Color yMinus1Color = map[mapSize / 2][mapSize / 2 - 1].GetComponent<SpriteRenderer>().color;
+        map[mapSize / 2][mapSize / 2 - 1].GetComponent<SpriteRenderer>().color = new Color(yMinus1Color.r, yMinus1Color.g, yMinus1Color.b, alpha);
+        Color xPlus1Color = map[mapSize / 2 + 1][mapSize / 2].GetComponent<SpriteRenderer>().color;
+        map[mapSize / 2 + 1][mapSize / 2].GetComponent<SpriteRenderer>().color = new Color(xPlus1Color.r, xPlus1Color.g, xPlus1Color.b, alpha);
+        Color xMinus1Color = map[mapSize / 2 - 1][mapSize / 2].GetComponent<SpriteRenderer>().color;
+        map[mapSize / 2 - 1][mapSize / 2].GetComponent<SpriteRenderer>().color = new Color(xMinus1Color.r, xMinus1Color.g, xMinus1Color.b, alpha);
     }
 }
