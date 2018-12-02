@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class TileData : MonoBehaviour {
 
-    public Sprite[] stepSprites;
-    public int[] stepValues = { 100 };
+    public enum StepName {
+        RAIN, WIND, SUN
+    }
+
+    [System.Serializable]
+    public struct TileStep {
+        public StepName name;
+        public Sprite sprite;
+        public int value;
+    }
+
+    public TileStep[] steps;
     public int initValue = 100;
 
     public float dataDecreaseTimeMuliplier = 5f;
@@ -33,9 +43,11 @@ public class TileData : MonoBehaviour {
 
         //Update Sprites
         int i = 0;
-        while (i < stepValues.Length && value > stepValues[i]) {
+        while (i < steps.Length && value > steps[i].value) {
             i++;
         }
-        spriteRenderer.sprite = stepSprites[i];
+        if (i == 0)
+            i++;
+        spriteRenderer.sprite = steps[i - 1].sprite;
     }
 }

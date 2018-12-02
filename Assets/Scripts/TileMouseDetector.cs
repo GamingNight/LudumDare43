@@ -18,4 +18,9 @@ public class TileMouseDetector : MonoBehaviour {
     private void OnMouseExit() {
         mouseIsOver = false;
     }
+
+    private void OnDisable() {
+
+        mouseIsOver = false;
+    }
 }
