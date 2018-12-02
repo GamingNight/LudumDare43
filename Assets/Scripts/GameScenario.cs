@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameScenario : MonoBehaviour {
 
@@ -10,10 +11,12 @@ public class GameScenario : MonoBehaviour {
 
     public MapManager mapManager;
     private ScenarioState state;
+    private GameTimer timer;
 
 
     void Start() {
         state = ScenarioState.Enter;
+        timer = GetComponent<GameTimer>();
     }
 
     void Update() {
@@ -37,6 +40,9 @@ public class GameScenario : MonoBehaviour {
                 InitAllTilesState();
                 state = ScenarioState.AllTiles;
             }
+        } else if (state == ScenarioState.AllTiles) {
+            if (timer.TimerOver)
+                SceneManager.LoadScene("gameover");
         }
     }
 
