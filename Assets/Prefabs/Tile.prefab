@@ -153,6 +153,18 @@ MonoBehaviour:
   - name: 2
     sprite: {fileID: 21300000, guid: 9f573396eac463247ab20879bf0162ba, type: 3}
     value: 550
+  - name: 3
+    sprite: {fileID: 21300000, guid: b7d6ed7dcdd82dc48903ac5f6cb11fdf, type: 3}
+    value: 700
+  - name: 4
+    sprite: {fileID: 21300000, guid: b7d6ed7dcdd82dc48903ac5f6cb11fdf, type: 3}
+    value: 720
+  - name: 4
+    sprite: {fileID: 21300000, guid: e6a51065b5c925746936cb98a926d5f2, type: 3}
+    value: 850
+  - name: 4
+    sprite: {fileID: 21300000, guid: 642df79cca5ab3d438be4062e82389d7, type: 3}
+    value: 1000
   initValue: 100
   dataDecreaseTimeMuliplier: 5
   dataIncreaseTimeMuliplier: 35
