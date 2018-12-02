@@ -131,25 +131,32 @@ MonoBehaviour:
   steps:
   - name: 0
     sprite: {fileID: 21300000, guid: 0ba51c6e85f18e54cbe7dece2184b288, type: 3}
-    value: 0
+    upValue: 0
+    downValue: 0
   - name: 0
     sprite: {fileID: 21300000, guid: 576eea6822439704d923a9056b1d67ef, type: 3}
-    value: 50
+    upValue: 50
+    downValue: 45
   - name: 0
     sprite: {fileID: 21300000, guid: a5e7b110a61301f429f23942d8b248ce, type: 3}
-    value: 100
+    upValue: 100
+    downValue: 90
   - name: 0
     sprite: {fileID: 21300000, guid: d0b0537efb103c949a0364fa2aaac28d, type: 3}
-    value: 200
+    upValue: 200
+    downValue: 190
   - name: 1
     sprite: {fileID: 21300000, guid: 7bc4d7bc48e35ea489249b7847235b57, type: 3}
-    value: 300
+    upValue: 300
+    downValue: 290
   - name: 1
     sprite: {fileID: 21300000, guid: 3cdf9eb953ff80344bb95b43d4848eb0, type: 3}
-    value: 400
+    upValue: 400
+    downValue: 390
   - name: 1
     sprite: {fileID: 21300000, guid: 9f573396eac463247ab20879bf0162ba, type: 3}
-    value: 550
+    upValue: 550
+    downValue: 540
   initValue: 100
   dataDecreaseTimeMuliplier: 5
   dataIncreaseTimeMuliplier: 35

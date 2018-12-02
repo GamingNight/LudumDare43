@@ -12,7 +12,8 @@ public class TileData : MonoBehaviour {
     public class TileStep {
         public StepName name;
         public Sprite sprite;
-        public int value;
+        public int upValue;
+        public int downValue;
     }
 
     public TileStep[] steps;
@@ -48,10 +49,13 @@ public class TileData : MonoBehaviour {
             value = Mathf.Max(0, value - (Time.deltaTime * dataDecreaseTimeMuliplier));
         }
 
-        //Update Sprites
+        //Check for step changing
         int i = 0;
-        while (i < steps.Length && value > steps[i].value) {
+        bool stopCondition = increase ? value > steps[i].upValue : value > steps[i].downValue;
+        while (i < steps.Length && stopCondition) {
             i++;
+            if (i < steps.Length)
+                stopCondition = increase ? value > steps[i].upValue : value > steps[i].downValue;
         }
         if (i == 0)
             i++;

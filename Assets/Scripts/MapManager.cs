@@ -83,7 +83,7 @@ public class MapManager : MonoBehaviour {
     void Update() {
 
         //Change selected particle effect as soon as player press Space
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetMouseButton(1)) {
             particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
             if (activeParticleType == TileData.StepName.RAIN) {
                 activeParticleType = TileData.StepName.WIND;
