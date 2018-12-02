@@ -368,7 +368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &136326927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -452,7 +452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &226329019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -750,6 +750,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapManager: {fileID: 707705787}
+  elementIcons:
+  - {fileID: 941903550}
+  - {fileID: 136326926}
+  - {fileID: 226329018}
 --- !u!1 &1365867920
 GameObject:
   m_ObjectHideFlags: 0

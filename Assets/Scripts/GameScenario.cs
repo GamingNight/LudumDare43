@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameScenario : MonoBehaviour {
@@ -10,6 +11,7 @@ public class GameScenario : MonoBehaviour {
     }
 
     public MapManager mapManager;
+    public GameObject[] elementIcons;
     private ScenarioState state;
     private GameTimer timer;
 
@@ -26,8 +28,9 @@ public class GameScenario : MonoBehaviour {
             state = ScenarioState.OneTile;
         } else if (state == ScenarioState.OneTile) {
             TileData middleTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2].GetComponent<TileData>();
-            if (middleTileData.Value >= 220) {
+            if (middleTileData.Value >= 320) {
                 InitCrossTilesState();
+                ReleaseWindEffect();
                 state = ScenarioState.CrossTiles;
             }
         } else if (state == ScenarioState.CrossTiles) {
@@ -36,10 +39,25 @@ public class GameScenario : MonoBehaviour {
             TileData downTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2 - 1].GetComponent<TileData>();
             TileData leftTileData = mapManager.Map[mapManager.mapSize / 2 - 1][mapManager.mapSize / 2].GetComponent<TileData>();
             TileData rightTileData = mapManager.Map[mapManager.mapSize / 2 + 1][mapManager.mapSize / 2].GetComponent<TileData>();
-            if (middleTileData.Value >= 220 && upTileData.Value >= 220 && downTileData.Value >= 220 && leftTileData.Value >= 220 && rightTileData.Value >= 220) {
+            if (middleTileData.Value >= 320 && upTileData.Value >= 320 && downTileData.Value >= 320 && leftTileData.Value >= 320 && rightTileData.Value >= 320) {
                 InitAllTilesState();
                 state = ScenarioState.AllTiles;
             }
+        }
+
+        //Release sun effect as soon as a tile has reached the level
+        bool sunLevelReached = false;
+        int i = 0;
+        while (i < mapManager.mapSize && !sunLevelReached) {
+            int j = 0;
+            while (j < mapManager.mapSize && !sunLevelReached) {
+                sunLevelReached = mapManager.Map[i][j].GetComponent<TileData>().Value >= 720;
+                j++;
+            }
+            i++;
+        }
+        if (sunLevelReached) {
+            ReleaseSunEffect();
         }
 
         //Time over = Game over 
@@ -71,6 +89,16 @@ public class GameScenario : MonoBehaviour {
     private void InitAllTilesState() {
         StartCoroutine(CameraUnzoomCoroutine(7f, 2f));
         StartCoroutine(AllTilesActivationCoroutine(2f));
+    }
+
+    private void ReleaseWindEffect() {
+        StartCoroutine(DisplayWindIconCoroutine(2f));
+        mapManager.ReleaseWindEffect();
+    }
+
+    private void ReleaseSunEffect() {
+        StartCoroutine(DisplaySunIconCoroutine(2f));
+        mapManager.ReleaseSunEffect();
     }
 
     private IEnumerator CameraUnzoomCoroutine(float targetSize, float zoomDuration) {
@@ -124,6 +152,36 @@ public class GameScenario : MonoBehaviour {
             mapManager.SetTileTransparency(middleMap - 1, middleMap + 1, lerpValue);
             mapManager.SetTileTransparency(middleMap + 1, middleMap - 1, lerpValue);
             mapManager.SetTileTransparency(middleMap - 1, middleMap - 1, lerpValue);
+            interpolation += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private IEnumerator DisplayWindIconCoroutine(float lerpDuration) {
+
+        Image windImage = elementIcons[1].GetComponent<Image>();
+        Color windColor = windImage.color;
+        windImage.color = new Color(windColor.r, windColor.g, windColor.b, 0);
+        elementIcons[1].SetActive(true);
+        float interpolation = 0;
+        while (interpolation < lerpDuration) {
+            float lerpValue = Mathf.Lerp(0, 1, interpolation);
+            windImage.color = new Color(windColor.r, windColor.g, windColor.b, lerpValue);
+            interpolation += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private IEnumerator DisplaySunIconCoroutine(float lerpDuration) {
+
+        Image sunImage = elementIcons[2].GetComponent<Image>();
+        Color windColor = sunImage.color;
+        sunImage.color = new Color(windColor.r, windColor.g, windColor.b, 0);
+        elementIcons[2].SetActive(true);
+        float interpolation = 0;
+        while (interpolation < lerpDuration) {
+            float lerpValue = Mathf.Lerp(0, 1, interpolation);
+            sunImage.color = new Color(windColor.r, windColor.g, windColor.b, lerpValue);
             interpolation += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }

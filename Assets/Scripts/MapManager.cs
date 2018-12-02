@@ -18,6 +18,8 @@ public class MapManager : MonoBehaviour {
     private GameObject selector;
     private Dictionary<TileData.StepName, GameObject> particleEffects;
     private TileData.StepName activeParticleType;
+    private bool windEffectIsAvailable;
+    private bool sunEffectIsAvailable;
 
     void Start() {
 
@@ -38,6 +40,9 @@ public class MapManager : MonoBehaviour {
             }
         }
         activeParticleType = TileData.StepName.RAIN;
+
+        windEffectIsAvailable = false;
+        sunEffectIsAvailable = false;
     }
 
     private void GenerateMap() {
@@ -89,13 +94,21 @@ public class MapManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) {
             particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
             if (activeParticleType == TileData.StepName.RAIN) {
-                activeParticleType = TileData.StepName.WIND;
-                particleEffectIcons[0].Unselect();
-                particleEffectIcons[1].Select();
+                if (windEffectIsAvailable) {
+                    activeParticleType = TileData.StepName.WIND;
+                    particleEffectIcons[0].Unselect();
+                    particleEffectIcons[1].Select();
+                }
             } else if (activeParticleType == TileData.StepName.WIND) {
-                activeParticleType = TileData.StepName.SUN;
-                particleEffectIcons[1].Unselect();
-                particleEffectIcons[2].Select();
+                if (sunEffectIsAvailable) {
+                    activeParticleType = TileData.StepName.SUN;
+                    particleEffectIcons[1].Unselect();
+                    particleEffectIcons[2].Select();
+                } else {
+                    activeParticleType = TileData.StepName.RAIN;
+                    particleEffectIcons[1].Unselect();
+                    particleEffectIcons[0].Select();
+                }
             } else if (activeParticleType == TileData.StepName.SUN) {
                 activeParticleType = TileData.StepName.RAIN;
                 particleEffectIcons[2].Unselect();
@@ -220,5 +233,13 @@ public class MapManager : MonoBehaviour {
                 Debug.Log(i + "_" + j + " = " + map[i][j].GetComponent<TileData>().Value);
             }
         }
+    }
+
+    public void ReleaseWindEffect() {
+        windEffectIsAvailable = true;
+    }
+
+    public void ReleaseSunEffect() {
+        sunEffectIsAvailable = true;
     }
 }
