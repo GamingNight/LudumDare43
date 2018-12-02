@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class MapManager : MonoBehaviour {
     public GameObject tilePrefab;
     public GameObject selectorPrefab;
     public GameObject[] particleEffectPrefabs;
+    public SelectIcon[] particleEffectIcons;
 
     private GameObject[][] map;
     public GameObject[][] Map { get { return map; } }
@@ -88,10 +90,16 @@ public class MapManager : MonoBehaviour {
             particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
             if (activeParticleType == TileData.StepName.RAIN) {
                 activeParticleType = TileData.StepName.WIND;
+                particleEffectIcons[0].Unselect();
+                particleEffectIcons[1].Select();
             } else if (activeParticleType == TileData.StepName.WIND) {
                 activeParticleType = TileData.StepName.SUN;
+                particleEffectIcons[1].Unselect();
+                particleEffectIcons[2].Select();
             } else if (activeParticleType == TileData.StepName.SUN) {
                 activeParticleType = TileData.StepName.RAIN;
+                particleEffectIcons[2].Unselect();
+                particleEffectIcons[0].Select();
             }
         }
 

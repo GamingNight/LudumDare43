@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 136326927}
   - component: {fileID: 136326929}
   - component: {fileID: 136326928}
+  - component: {fileID: 136326930}
   m_Layer: 5
   m_Name: WindIcon
   m_TagString: Untagged
@@ -420,6 +421,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 136326926}
   m_CullTransparentMesh: 0
+--- !u!114 &136326930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 136326926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5609b55edd36e4696b797eaa38599c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: {fileID: 21300000, guid: 8c62ce0afdf67d54dac91d915bb616ba, type: 3}
+  unselected: {fileID: 21300000, guid: 8fb7569d2e9daac49a35833b52ad1e52, type: 3}
+  image: {fileID: 136326928}
 --- !u!1 &226329018
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +445,7 @@ GameObject:
   - component: {fileID: 226329019}
   - component: {fileID: 226329021}
   - component: {fileID: 226329020}
+  - component: {fileID: 226329022}
   m_Layer: 5
   m_Name: SunIcon
   m_TagString: Untagged
@@ -452,7 +468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -60}
+  m_AnchoredPosition: {x: 0, y: -55}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226329020
@@ -489,6 +505,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 226329018}
   m_CullTransparentMesh: 0
+--- !u!114 &226329022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226329018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5609b55edd36e4696b797eaa38599c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: {fileID: 21300000, guid: 41d759925c5e419439a2968c166f482f, type: 3}
+  unselected: {fileID: 21300000, guid: dc0619a77e6166145b66f4a8fc21067f, type: 3}
+  image: {fileID: 226329020}
 --- !u!1 &611383918
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +606,10 @@ MonoBehaviour:
   - {fileID: 1585896945990830, guid: 19515b8087cff8a4e82b8e0836c02100, type: 2}
   - {fileID: 1311741696412950, guid: 7733d337af24e6c48bcd3d1ff60c797a, type: 2}
   - {fileID: 1585896945990830, guid: 77f24b9b66fedd248af9724fda2129cc, type: 2}
+  particleEffectIcons:
+  - {fileID: 941903554}
+  - {fileID: 136326930}
+  - {fileID: 226329022}
 --- !u!1 &941903550
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +620,7 @@ GameObject:
   - component: {fileID: 941903551}
   - component: {fileID: 941903553}
   - component: {fileID: 941903552}
+  - component: {fileID: 941903554}
   m_Layer: 5
   m_Name: RainIcon
   m_TagString: Untagged
@@ -608,7 +643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 55}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &941903552
@@ -630,7 +665,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: fe76768df42454941af768332e938b55, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3733544eb2032194290594d723e16f1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -645,6 +680,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 941903550}
   m_CullTransparentMesh: 0
+--- !u!114 &941903554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 941903550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5609b55edd36e4696b797eaa38599c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: {fileID: 21300000, guid: 3733544eb2032194290594d723e16f1c, type: 3}
+  unselected: {fileID: 21300000, guid: fe76768df42454941af768332e938b55, type: 3}
+  image: {fileID: 941903552}
 --- !u!1 &1131378329
 GameObject:
   m_ObjectHideFlags: 0
