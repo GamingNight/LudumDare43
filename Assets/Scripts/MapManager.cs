@@ -9,20 +9,33 @@ public class MapManager : MonoBehaviour {
     public float tileWidth = 5;
     public GameObject tilePrefab;
     public GameObject selectorPrefab;
-    public GameObject rainEffectPrefab;
+    public GameObject[] particleEffectPrefabs;
 
     private GameObject[][] map;
     public GameObject[][] Map { get { return map; } }
     private GameObject selector;
-    private GameObject rainEffect;
+    private Dictionary<TileData.StepName, GameObject> particleEffects;
+    private TileData.StepName activeParticleType;
 
     void Start() {
 
         GenerateMap();
         selector = Instantiate<GameObject>(selectorPrefab);
         selector.SetActive(false);
-        rainEffect = Instantiate<GameObject>(rainEffectPrefab);
-        rainEffect.GetComponentInChildren<ParticleSystem>().Stop();
+        particleEffects = new Dictionary<TileData.StepName, GameObject>();
+        for (int i = 0; i < particleEffectPrefabs.Length; i++) {
+            if (i == 0) {
+                particleEffects[TileData.StepName.RAIN] = Instantiate<GameObject>(particleEffectPrefabs[i]);
+                particleEffects[TileData.StepName.RAIN].GetComponentInChildren<ParticleSystem>().Stop();
+            } else if (i == 1) {
+                particleEffects[TileData.StepName.WIND] = Instantiate<GameObject>(particleEffectPrefabs[i]);
+                particleEffects[TileData.StepName.WIND].GetComponentInChildren<ParticleSystem>().Stop();
+            } else if (i == 2) {
+                particleEffects[TileData.StepName.SUN] = Instantiate<GameObject>(particleEffectPrefabs[i]);
+                particleEffects[TileData.StepName.SUN].GetComponentInChildren<ParticleSystem>().Stop();
+            }
+        }
+        activeParticleType = TileData.StepName.RAIN;
     }
 
     private void GenerateMap() {
@@ -69,8 +82,23 @@ public class MapManager : MonoBehaviour {
 
     void Update() {
 
+        //Change selected particle effect as soon as player press Space
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
+            if (activeParticleType == TileData.StepName.RAIN) {
+                activeParticleType = TileData.StepName.WIND;
+            } else if (activeParticleType == TileData.StepName.WIND) {
+                activeParticleType = TileData.StepName.SUN;
+            } else if (activeParticleType == TileData.StepName.SUN) {
+                activeParticleType = TileData.StepName.RAIN;
+            }
+        }
+
+        //Update selector and particle position depending on mouse position
         int i = 0;
         bool mouseDetected = false;
+        int mouseTileI = -1;
+        int mouseTileJ = -1;
         while (i < mapSize && !mouseDetected) {
             int j = 0;
             while (j < mapSize && !mouseDetected) {
@@ -78,22 +106,38 @@ public class MapManager : MonoBehaviour {
                 if (mouseDetector.MouseIsOver) {
                     selector.transform.position = map[i][j].transform.position;
                     selector.SetActive(true);
-                    rainEffect.transform.position = map[i][j].transform.position;
+                    particleEffects[activeParticleType].transform.position = map[i][j].transform.position;
                     mouseDetected = true;
+                    mouseTileI = i;
+                    mouseTileJ = j;
                 }
                 j++;
             }
             i++;
         }
+
+        //Disable selector if mouse is away
         if (!mouseDetected) {
             selector.SetActive(false);
         }
 
+        //Activate particle effect if player presses mouse left button
         if (mouseDetected && Input.GetMouseButton(0)) {
-            if (!rainEffect.GetComponentInChildren<ParticleSystem>().isPlaying)
-                rainEffect.GetComponentInChildren<ParticleSystem>().Play();
+            if (!particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().isPlaying)
+                particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Play();
         } else {
-            rainEffect.GetComponentInChildren<ParticleSystem>().Stop();
+            particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
+        }
+
+        //Update all tile values depending on particle effect type
+        for (i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                bool increaseValue = false;
+                if (Input.GetMouseButton(0) && i == mouseTileI && j == mouseTileJ && activeParticleType == map[i][j].GetComponent<TileData>().LastStep.name) {
+                    increaseValue = true;
+                }
+                map[i][j].GetComponent<TileData>().UpdateValue(increaseValue);
+            }
         }
     }
 

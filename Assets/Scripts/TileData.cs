@@ -9,7 +9,7 @@ public class TileData : MonoBehaviour {
     }
 
     [System.Serializable]
-    public struct TileStep {
+    public class TileStep {
         public StepName name;
         public Sprite sprite;
         public int value;
@@ -24,25 +24,25 @@ public class TileData : MonoBehaviour {
     public SpriteRenderer transitionSpriteRenderer;
 
     private SpriteRenderer spriteRenderer;
-    private TileMouseDetector mouseDetector;
     private float value;
     public float Value { get { return value; } }
 
-    private Sprite previousSprite;
+    private TileStep lastStep;
+    public TileStep LastStep { get { return lastStep; } }
     private Coroutine runningTransitionCoroutine;
 
     void Start() {
         value = initValue;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        mouseDetector = GetComponent<TileMouseDetector>();
-        previousSprite = null;
+        lastStep = null;
         runningTransitionCoroutine = null;
     }
 
-    void Update() {
+    //Called by the map manager
+    public void UpdateValue(bool increase) {
 
         //Update Values
-        if (mouseDetector.MouseIsOver && Input.GetMouseButton(0)) {
+        if (increase) {
             value = value + (Time.deltaTime * dataIncreaseTimeMuliplier);
         } else {
             value = Mathf.Max(0, value - (Time.deltaTime * dataDecreaseTimeMuliplier));
@@ -56,13 +56,13 @@ public class TileData : MonoBehaviour {
         if (i == 0)
             i++;
 
-        Sprite nextSprite = steps[i - 1].sprite;
-        if (previousSprite == null)
-            spriteRenderer.sprite = nextSprite;
-        else if (previousSprite != nextSprite) {
-            ProcessSpriteTransition(previousSprite, nextSprite);
+        TileStep nextStep = steps[i - 1];
+        if (lastStep == null)
+            spriteRenderer.sprite = nextStep.sprite;
+        else if (lastStep != nextStep) {
+            ProcessSpriteTransition(lastStep.sprite, nextStep.sprite);
         }
-        previousSprite = nextSprite;
+        lastStep = nextStep;
     }
 
     private void ProcessSpriteTransition(Sprite prevSprite, Sprite nextSprite) {

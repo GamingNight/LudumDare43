@@ -310,8 +310,10 @@ MonoBehaviour:
   tilePrefab: {fileID: 1115134044124316, guid: 71a6d686f1644574e91f807e7b1a3cb6, type: 2}
   selectorPrefab: {fileID: 1327047437622108, guid: 926313538ac3a8e41a0633dd3671c585,
     type: 2}
-  rainEffectPrefab: {fileID: 1585896945990830, guid: 19515b8087cff8a4e82b8e0836c02100,
-    type: 2}
+  particleEffectPrefabs:
+  - {fileID: 1585896945990830, guid: 19515b8087cff8a4e82b8e0836c02100, type: 2}
+  - {fileID: 1311741696412950, guid: 7733d337af24e6c48bcd3d1ff60c797a, type: 2}
+  - {fileID: 1311741696412950, guid: 7733d337af24e6c48bcd3d1ff60c797a, type: 2}
 --- !u!1 &1131378329
 GameObject:
   m_ObjectHideFlags: 0
