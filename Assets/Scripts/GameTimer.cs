@@ -23,7 +23,10 @@ public class GameTimer : MonoBehaviour {
         currentTime = Mathf.Min(totalTime, currentTime + Time.deltaTime);
 
         float timerTextValue = ((int)(100 * (totalTime - currentTime))) / 100f;
-        timerText.text = timerTextValue.ToString();
+		int min = (int)(timerTextValue / 60);
+		int sec = ((int)timerTextValue) - min * 60;
+		string sec_str = (sec >= 10) ? sec.ToString () : "0" + sec.ToString ();
+		timerText.text = min.ToString() + ":" + sec_str;
         if (currentTime == totalTime) {
             timeOver = true;
         }
