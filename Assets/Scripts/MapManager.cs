@@ -60,7 +60,7 @@ public class MapManager : MonoBehaviour {
             for (int j = 0; j < mapSize; j++) {
                 //int pickedIndex = Random.Range(0, rainValues.Count);
                 //map[i][j].GetComponent<TileData>().initRainValue = rainValues[pickedIndex];
-                map[i][j].GetComponent<TileData>().initRainValue = 0;
+                map[i][j].GetComponent<TileData>().initValue = 0;
                 //rainValues.RemoveAt(pickedIndex);
             }
         }
@@ -113,5 +113,16 @@ public class MapManager : MonoBehaviour {
     public void SetTileTransparency(int i, int j, float alpha) {
         Color tileColor = map[i][j].GetComponent<SpriteRenderer>().color;
         map[i][j].GetComponent<SpriteRenderer>().color = new Color(tileColor.r, tileColor.g, tileColor.b, alpha);
+    }
+
+    public float ComputeScore() {
+
+        float score = 0;
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                score += map[i][j].GetComponent<TileData>().Value;
+            }
+        }
+        return score;
     }
 }

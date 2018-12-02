@@ -9,13 +9,13 @@ public class GameTimer : MonoBehaviour {
     public Text timerText;
 
     private float currentTime;
-    private bool timerOver;
-    public bool TimerOver { get { return timerOver; } }
+    private bool timeOver;
+    public bool TimeOver { get { return timeOver; } }
 
     void Start() {
 
         currentTime = 0;
-        timerOver = false;
+        timeOver = false;
     }
 
     void Update() {
@@ -25,7 +25,7 @@ public class GameTimer : MonoBehaviour {
         float timerTextValue = ((int)(100 * (totalTime - currentTime))) / 100f;
         timerText.text = timerTextValue.ToString();
         if (currentTime == totalTime) {
-            timerOver = true;
+            timeOver = true;
         }
 
     }
