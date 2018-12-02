@@ -141,15 +141,10 @@ MonoBehaviour:
   - name: 0
     sprite: {fileID: 21300000, guid: d0b0537efb103c949a0364fa2aaac28d, type: 3}
     value: 200
-  stepSprites:
-  - {fileID: 21300000, guid: 0ba51c6e85f18e54cbe7dece2184b288, type: 3}
-  - {fileID: 21300000, guid: 576eea6822439704d923a9056b1d67ef, type: 3}
-  - {fileID: 21300000, guid: a5e7b110a61301f429f23942d8b248ce, type: 3}
-  - {fileID: 21300000, guid: d0b0537efb103c949a0364fa2aaac28d, type: 3}
-  stepValues: 3200000064000000c8000000
   initValue: 100
   dataDecreaseTimeMuliplier: 5
   dataIncreaseTimeMuliplier: 35
+  transitionSpriteRenderer: {fileID: 212745203176006202}
 --- !u!212 &212106276395914424
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -230,7 +225,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

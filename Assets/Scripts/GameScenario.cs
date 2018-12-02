@@ -77,7 +77,7 @@ public class GameScenario : MonoBehaviour {
 
         float initSize = Camera.main.orthographicSize;
         float interpolation = 0;
-        while (Camera.main.orthographicSize != targetSize) {
+        while (Camera.main.orthographicSize < targetSize) {
             Camera.main.orthographicSize = Mathf.Lerp(initSize, targetSize, interpolation / zoomDuration);
             interpolation += 0.01f;
             yield return new WaitForSeconds(0.01f);
@@ -96,7 +96,7 @@ public class GameScenario : MonoBehaviour {
         mapManager.ShowTile(middleMap, middleMap + 1);
         mapManager.ShowTile(middleMap, middleMap - 1);
         float interpolation = 0;
-        while ((interpolation / lerpDuration) != 1) {
+        while ((interpolation / lerpDuration) < 1) {
             float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             mapManager.SetTileTransparency(middleMap + 1, middleMap, lerpValue);
             mapManager.SetTileTransparency(middleMap - 1, middleMap, lerpValue);
@@ -118,7 +118,7 @@ public class GameScenario : MonoBehaviour {
         mapManager.ShowTile(middleMap + 1, middleMap - 1);
         mapManager.ShowTile(middleMap - 1, middleMap - 1);
         float interpolation = 0;
-        while ((interpolation / lerpDuration) != 1) {
+        while ((interpolation / lerpDuration) < 1) {
             float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             mapManager.SetTileTransparency(middleMap + 1, middleMap + 1, lerpValue);
             mapManager.SetTileTransparency(middleMap - 1, middleMap + 1, lerpValue);
