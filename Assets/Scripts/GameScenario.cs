@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameScenario : MonoBehaviour {
 
@@ -10,10 +11,12 @@ public class GameScenario : MonoBehaviour {
 
     public MapManager mapManager;
     private ScenarioState state;
+    private GameTimer timer;
 
 
     void Start() {
         state = ScenarioState.Enter;
+        timer = GetComponent<GameTimer>();
     }
 
     void Update() {
@@ -23,7 +26,7 @@ public class GameScenario : MonoBehaviour {
             state = ScenarioState.OneTile;
         } else if (state == ScenarioState.OneTile) {
             TileData middleTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2].GetComponent<TileData>();
-            if (middleTileData.RainValue >= 220) {
+            if (middleTileData.Value >= 220) {
                 InitCrossTilesState();
                 state = ScenarioState.CrossTiles;
             }
@@ -33,10 +36,16 @@ public class GameScenario : MonoBehaviour {
             TileData downTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2 - 1].GetComponent<TileData>();
             TileData leftTileData = mapManager.Map[mapManager.mapSize / 2 - 1][mapManager.mapSize / 2].GetComponent<TileData>();
             TileData rightTileData = mapManager.Map[mapManager.mapSize / 2 + 1][mapManager.mapSize / 2].GetComponent<TileData>();
-            if (middleTileData.RainValue >= 220 && upTileData.RainValue >= 220 && downTileData.RainValue >= 220 && leftTileData.RainValue >= 220 && rightTileData.RainValue >= 220) {
+            if (middleTileData.Value >= 220 && upTileData.Value >= 220 && downTileData.Value >= 220 && leftTileData.Value >= 220 && rightTileData.Value >= 220) {
                 InitAllTilesState();
                 state = ScenarioState.AllTiles;
             }
+        }
+
+        //Timer over = Game over 
+        if (timer.TimeOver) {
+            EndGameStats.FINAL_SCORE = mapManager.ComputeScore();
+            SceneManager.LoadScene("gameover");
         }
     }
 

@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class TileData : MonoBehaviour {
 
-    public Sprite[] rainSprites;
-    public int[] rainSteps = { 100 };
-    public int initRainValue = 100;
+    public Sprite[] stepSprites;
+    public int[] stepValues = { 100 };
+    public int initValue = 100;
 
     public float dataDecreaseTimeMuliplier = 5f;
     public float dataIncreaseTimeMuliplier = 40f;
 
     private SpriteRenderer spriteRenderer;
     private TileMouseDetector mouseDetector;
-    private float rainValue;
-    public float RainValue { get { return rainValue; } }
+    private float value;
+    public float Value { get { return value; } }
 
     void Start() {
-        rainValue = initRainValue;
+        value = initValue;
         spriteRenderer = GetComponent<SpriteRenderer>();
         mouseDetector = GetComponent<TileMouseDetector>();
     }
@@ -26,16 +26,16 @@ public class TileData : MonoBehaviour {
 
         //Update Values
         if (mouseDetector.MouseIsOver && Input.GetMouseButton(0)) {
-            rainValue = rainValue + (Time.deltaTime * dataIncreaseTimeMuliplier);
+            value = value + (Time.deltaTime * dataIncreaseTimeMuliplier);
         } else {
-            rainValue = Mathf.Max(0, rainValue - (Time.deltaTime * dataDecreaseTimeMuliplier));
+            value = Mathf.Max(0, value - (Time.deltaTime * dataDecreaseTimeMuliplier));
         }
 
         //Update Sprites
         int i = 0;
-        while (i < rainSteps.Length && rainValue > rainSteps[i]) {
+        while (i < stepValues.Length && value > stepValues[i]) {
             i++;
         }
-        spriteRenderer.sprite = rainSprites[i];
+        spriteRenderer.sprite = stepSprites[i];
     }
 }
