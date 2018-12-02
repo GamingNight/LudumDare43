@@ -6,11 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour {
 
-    public Text scoreText;
+    public Text rawScoreText;
+    public Text bonusText;
+    public Text totalScoreText;
 
     void Start() {
 
-        scoreText.text = "Votre score est de " + (int) EndGameStats.FINAL_SCORE;
+        int intRawScore = (int)EndGameStats.RAW_SCORE;
+        rawScoreText.text = "Score: " + intRawScore;
+        float roundedMultiplier = ((int)(10 * EndGameStats.HOMOGENEITY_MULTIPLIER)) / 10f;
+        bonusText.text = "Homogeneity bonus: x" + roundedMultiplier;
+        totalScoreText.text = "Total Score: " + (intRawScore * roundedMultiplier);
     }
 
     public void LoadMainScene() {

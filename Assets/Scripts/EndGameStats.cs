@@ -4,5 +4,6 @@ using UnityEngine;
 
 public static class EndGameStats {
 
-    public static float FINAL_SCORE;
+    public static float RAW_SCORE;
+    public static float HOMOGENEITY_MULTIPLIER;
 }
