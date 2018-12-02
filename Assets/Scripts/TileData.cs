@@ -78,12 +78,12 @@ public class TileData : MonoBehaviour {
         transitionSpriteRenderer.color = new Color(tsrCol.r, tsrCol.g, tsrCol.b, srCol.a);
         transitionSpriteRenderer.sprite = prevSprite;
 
-        spriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, 0);
+        spriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, tsrCol.a);
         spriteRenderer.sprite = nextSprite;
 
         float interpolation = 0;
         while (interpolation < lerpDuration) {
-            float alpha = Mathf.Lerp(0, 1, interpolation / lerpDuration);
+            float alpha = Mathf.Lerp(tsrCol.a, 1, interpolation / lerpDuration);
             spriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, alpha);
             float talpha = Mathf.Lerp(srCol.a, 0, interpolation / lerpDuration);
             transitionSpriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, talpha);
