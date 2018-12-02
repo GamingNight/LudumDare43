@@ -12,6 +12,7 @@ public class GameScenario : MonoBehaviour {
 
     public MapManager mapManager;
     public GameObject[] elementIcons;
+    public GameObject elementControlIcon;
     private ScenarioState state;
     private GameTimer timer;
 
@@ -31,7 +32,7 @@ public class GameScenario : MonoBehaviour {
             if (middleTileData.Value >= 320) {
                 InitCrossTilesState();
                 ReleaseWindEffect();
-                state = ScenarioState.CrossTiles;
+                 state = ScenarioState.CrossTiles;
             }
         } else if (state == ScenarioState.CrossTiles) {
             TileData middleTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2].GetComponent<TileData>();
@@ -94,6 +95,7 @@ public class GameScenario : MonoBehaviour {
     private void ReleaseWindEffect() {
         StartCoroutine(DisplayWindIconCoroutine(2f));
         mapManager.ReleaseWindEffect();
+        StartCoroutine(DisplayControlIconCoroutine(5f));
     }
 
     private void ReleaseSunEffect() {
@@ -165,7 +167,7 @@ public class GameScenario : MonoBehaviour {
         elementIcons[1].SetActive(true);
         float interpolation = 0;
         while (interpolation < lerpDuration) {
-            float lerpValue = Mathf.Lerp(0, 1, interpolation);
+            float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             windImage.color = new Color(windColor.r, windColor.g, windColor.b, lerpValue);
             interpolation += 0.01f;
             yield return new WaitForSeconds(0.01f);
@@ -180,10 +182,35 @@ public class GameScenario : MonoBehaviour {
         elementIcons[2].SetActive(true);
         float interpolation = 0;
         while (interpolation < lerpDuration) {
-            float lerpValue = Mathf.Lerp(0, 1, interpolation);
+            float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             sunImage.color = new Color(windColor.r, windColor.g, windColor.b, lerpValue);
             interpolation += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    private IEnumerator DisplayControlIconCoroutine(float lifeDuration) {
+
+        Image controlInfoImage = elementControlIcon.GetComponent<Image>();
+        Color infoColor = controlInfoImage.color;
+        controlInfoImage.color = new Color(controlInfoImage.color.r, controlInfoImage.color.g, controlInfoImage.color.b, 0);
+        elementControlIcon.SetActive(true);
+        float interpolation = 0;
+        float lerpDuration = 2;
+        while (interpolation < lerpDuration) {
+            float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
+            controlInfoImage.color = new Color(controlInfoImage.color.r, controlInfoImage.color.g, controlInfoImage.color.b, lerpValue);
+            interpolation += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return new WaitForSeconds(lifeDuration);
+        interpolation = 0;
+        while (interpolation < lerpDuration) {
+            float lerpValue = Mathf.Lerp(1, 0, interpolation / lerpDuration);
+            controlInfoImage.color = new Color(controlInfoImage.color.r, controlInfoImage.color.g, controlInfoImage.color.b, lerpValue);
+            interpolation += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        elementControlIcon.SetActive(false);
     }
 }
