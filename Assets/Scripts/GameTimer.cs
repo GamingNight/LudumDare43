@@ -7,6 +7,7 @@ public class GameTimer : MonoBehaviour {
 
     public int totalTime;
     public Text timerText;
+    public Animator clockAnimator;
 
     private float currentTime;
     private bool timeOver;
@@ -16,6 +17,9 @@ public class GameTimer : MonoBehaviour {
 
         currentTime = 0;
         timeOver = false;
+        //Change speed of clock accordingly to the total game time.
+        //Regular speed is 1 and corresponds to 60 frames per second.
+        clockAnimator.speed /= totalTime;
     }
 
     void Update() {
