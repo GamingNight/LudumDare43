@@ -215,6 +215,31 @@ public class MapManager : MonoBehaviour {
         return sd;
     }
 
+	public float TerritoryEqualityBonus() {
+
+		int nbSteps = 9;
+		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+		for (int i = 0; i < mapSize; i++) {
+			for (int j = 0; j < mapSize; j++) {
+				float score = map[i][j].GetComponent<TileData>().Value;
+				int steps = (int)(score / 100);
+				steps = (steps > nbSteps) ? nbSteps : steps;
+				scoreSteps[steps] = scoreSteps [steps] + 1;
+			}
+		}
+		int bonus = 0;
+
+		for (int i = 1; i < mapSize; i++) {
+			if (bonus < scoreSteps [i]) {
+				bonus = scoreSteps [i];
+			}
+		}
+		return (float) bonus;
+
+	}
+
+
     public void PrintScores() {
 
         for (int i = 0; i < mapSize; i++) {

@@ -17,6 +17,10 @@ public class GameScore : MonoBehaviour {
 		totalScore = (int)mapManager.ComputeScore();
 		scoreText.text = totalScore.ToString ();
 
+		// new bonus
+		// coefText.text = mapManager.TerritoryEqualityBonus().ToString ();
+
+		// old bonus
 		float sdScore = mapManager.ComputeStandardDeviationScore();
 		TileData.TileStep[] steps = mapManager.Map[0][0].GetComponent<TileData>().steps;
 		int maxScore = steps[steps.Length - 1].value + 100;
@@ -25,7 +29,8 @@ public class GameScore : MonoBehaviour {
 		//The greater is the standard deviation, the lower is the multiplier
 		homogeneityCoef = 5 * ((1 + (middleScore - sdScore) / middleScore) / 2f);
 
-		coefText.text = homogeneityCoef.ToString ();
+		//coefText.text = homogeneityCoef.ToString ();
+
 
 	}
 }
