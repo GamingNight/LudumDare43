@@ -191,12 +191,13 @@ public class GameScenario : MonoBehaviour {
 
     private IEnumerator DisplayControlIconCoroutine(float lifeDuration) {
 
+        yield return new WaitForSeconds(2f);
         Image controlInfoImage = elementControlIcon.GetComponent<Image>();
         Color infoColor = controlInfoImage.color;
         controlInfoImage.color = new Color(controlInfoImage.color.r, controlInfoImage.color.g, controlInfoImage.color.b, 0);
         elementControlIcon.SetActive(true);
         float interpolation = 0;
-        float lerpDuration = 2;
+        float lerpDuration = 1;
         while (interpolation < lerpDuration) {
             float lerpValue = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             controlInfoImage.color = new Color(controlInfoImage.color.r, controlInfoImage.color.g, controlInfoImage.color.b, lerpValue);
