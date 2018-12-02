@@ -47,7 +47,7 @@ public class GameScenario : MonoBehaviour {
             float rawScore = mapManager.ComputeScore();
             float sdScore = mapManager.ComputeStandardDeviationScore();
             TileData.TileStep[] steps = mapManager.Map[0][0].GetComponent<TileData>().steps;
-            int maxScore = steps[steps.Length - 1].upValue + 100;
+            int maxScore = steps[steps.Length - 1].value + 100;
             float middleScore = maxScore / 2f;
             sdScore = Mathf.Min(sdScore, middleScore);
             //The greater is the standard deviation, the lower is the multiplier

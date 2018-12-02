@@ -12,8 +12,7 @@ public class TileData : MonoBehaviour {
     public class TileStep {
         public StepName name;
         public Sprite sprite;
-        public int upValue;
-        public int downValue;
+        public int value;
     }
 
     public TileStep[] steps;
@@ -51,11 +50,8 @@ public class TileData : MonoBehaviour {
 
         //Check for step changing
         int i = 0;
-        bool stopCondition = increase ? value > steps[i].upValue : value > steps[i].downValue;
-        while (i < steps.Length && stopCondition) {
+        while (i < steps.Length && value > steps[i].value) {
             i++;
-            if (i < steps.Length)
-                stopCondition = increase ? value > steps[i].upValue : value > steps[i].downValue;
         }
         if (i == 0)
             i++;
