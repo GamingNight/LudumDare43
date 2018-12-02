@@ -42,7 +42,7 @@ public class GameScenario : MonoBehaviour {
             }
         }
 
-        //Timer over = Game over 
+        //Time over = Game over 
         if (timer.TimeOver) {
             float rawScore = mapManager.ComputeScore();
             float sdScore = mapManager.ComputeStandardDeviationScore();

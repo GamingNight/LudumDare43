@@ -133,7 +133,11 @@ public class MapManager : MonoBehaviour {
         for (i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
                 bool increaseValue = false;
-                if (Input.GetMouseButton(0) && i == mouseTileI && j == mouseTileJ && activeParticleType == map[i][j].GetComponent<TileData>().LastStep.name) {
+                bool effectTypeIsCompatible = false;
+                if (map[i][j].GetComponent<TileData>().LastStep != null)
+                    effectTypeIsCompatible = map[i][j].GetComponent<TileData>().LastStep.name.ToString().Contains(activeParticleType.ToString());
+                //bool effectTypeIsCompatible = activeParticleType == map[i][j].GetComponent<TileData>().LastStep.name;
+                if (Input.GetMouseButton(0) && i == mouseTileI && j == mouseTileJ && effectTypeIsCompatible) {
                     increaseValue = true;
                 }
                 map[i][j].GetComponent<TileData>().UpdateValue(increaseValue);

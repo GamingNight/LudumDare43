@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileData : MonoBehaviour {
 
     public enum StepName {
-        RAIN, WIND, SUN
+        RAIN, RAINWIND, WIND, WINDSUN, SUN
     }
 
     [System.Serializable]
@@ -59,7 +59,7 @@ public class TileData : MonoBehaviour {
         TileStep nextStep = steps[i - 1];
         if (lastStep == null)
             spriteRenderer.sprite = nextStep.sprite;
-        else if (lastStep != nextStep) {
+        else if (lastStep.sprite != nextStep.sprite) {
             ProcessSpriteTransition(lastStep.sprite, nextStep.sprite);
         }
         lastStep = nextStep;
