@@ -51,6 +51,7 @@ public class MapManager : MonoBehaviour {
                 tileClone.transform.position = new Vector3(initPosX - i * tileWidth / 2 + j * tileWidth / 2, initPosY - i * tileHeight / 2 - j * tileHeight / 2, 0);
                 tileClone.transform.parent = gameObject.transform;
                 tileClone.name = tilePrefab.name + "" + i + "" + j;
+                tileClone.GetComponent<SpriteRenderer>().sortingOrder = 2 + (i * mapSize + j);
                 map[i][j] = tileClone;
             }
         }
