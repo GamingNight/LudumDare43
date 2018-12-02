@@ -29,12 +29,14 @@ public class TileData : MonoBehaviour {
     public float Value { get { return value; } }
 
     private Sprite previousSprite;
+    private Coroutine runningTransitionCoroutine;
 
     void Start() {
         value = initValue;
         spriteRenderer = GetComponent<SpriteRenderer>();
         mouseDetector = GetComponent<TileMouseDetector>();
         previousSprite = null;
+        runningTransitionCoroutine = null;
     }
 
     void Update() {
@@ -64,16 +66,18 @@ public class TileData : MonoBehaviour {
     }
 
     private void ProcessSpriteTransition(Sprite prevSprite, Sprite nextSprite) {
-        StartCoroutine(SpriteTransitionCoroutine(0.5f, prevSprite, nextSprite));
+        if (runningTransitionCoroutine != null)
+            StopCoroutine(runningTransitionCoroutine);
+        runningTransitionCoroutine = StartCoroutine(SpriteTransitionCoroutine(0.5f, prevSprite, nextSprite));
     }
-
+    private int callIndex = 0;
     private IEnumerator SpriteTransitionCoroutine(float lerpDuration, Sprite prevSprite, Sprite nextSprite) {
-
-        transitionSpriteRenderer.sprite = prevSprite;
         Color tsrCol = transitionSpriteRenderer.color;
-        transitionSpriteRenderer.color = new Color(tsrCol.r, tsrCol.g, tsrCol.b, 1);
-
         Color srCol = spriteRenderer.color;
+
+        transitionSpriteRenderer.color = new Color(tsrCol.r, tsrCol.g, tsrCol.b, srCol.a);
+        transitionSpriteRenderer.sprite = prevSprite;
+
         spriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, 0);
         spriteRenderer.sprite = nextSprite;
 
@@ -81,10 +85,12 @@ public class TileData : MonoBehaviour {
         while (interpolation < lerpDuration) {
             float alpha = Mathf.Lerp(0, 1, interpolation / lerpDuration);
             spriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, alpha);
-            transitionSpriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, 1 - alpha);
+            float talpha = Mathf.Lerp(srCol.a, 0, interpolation / lerpDuration);
+            transitionSpriteRenderer.color = new Color(srCol.r, srCol.g, srCol.b, talpha);
             interpolation += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
         transitionSpriteRenderer.sprite = null;
+        callIndex++;
     }
 }
