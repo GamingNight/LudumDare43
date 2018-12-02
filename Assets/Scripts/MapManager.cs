@@ -47,21 +47,21 @@ public class MapManager : MonoBehaviour {
 
     private void InitTileData() {
 
-        List<int> rainValues = new List<int>();
-        for (int i = 0; i < mapSize * mapSize; i++) {
-            if (i == 0) {
-                rainValues.Add(130);
-            } else {
-                rainValues.Add(rainValues[i - 1] + 20);
-            }
-        }
+        //List<int> rainValues = new List<int>();
+        //for (int i = 0; i < mapSize * mapSize; i++) {
+        //    if (i == 0) {
+        //        rainValues.Add(130);
+        //    } else {
+        //        rainValues.Add(rainValues[i - 1] + 20);
+        //    }
+        //}
 
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                int pickedIndex = Random.Range(0, rainValues.Count);
+                //int pickedIndex = Random.Range(0, rainValues.Count);
                 //map[i][j].GetComponent<TileData>().initRainValue = rainValues[pickedIndex];
                 map[i][j].GetComponent<TileData>().initRainValue = 0;
-                rainValues.RemoveAt(pickedIndex);
+                //rainValues.RemoveAt(pickedIndex);
             }
         }
 
