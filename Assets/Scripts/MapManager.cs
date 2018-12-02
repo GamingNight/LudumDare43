@@ -125,4 +125,43 @@ public class MapManager : MonoBehaviour {
         }
         return score;
     }
+
+    public float ComputeMeanScore() {
+
+        float mean = 0;
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                mean += map[i][j].GetComponent<TileData>().Value;
+            }
+        }
+        if (mapSize != 0) {
+            mean /= (mapSize * mapSize);
+        }
+        return mean;
+    }
+
+    public float ComputeStandardDeviationScore() {
+
+        float sd = 0;
+        float mean = ComputeMeanScore();
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                float value = map[i][j].GetComponent<TileData>().Value;
+                sd += Mathf.Pow(mean - value, 2);
+            }
+        }
+        if (mapSize != 0) {
+            sd = Mathf.Sqrt(sd / (mapSize * mapSize));
+        }
+        return sd;
+    }
+
+    public void PrintScores() {
+
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                Debug.Log(i + "_" + j + " = " + map[i][j].GetComponent<TileData>().Value);
+            }
+        }
+    }
 }

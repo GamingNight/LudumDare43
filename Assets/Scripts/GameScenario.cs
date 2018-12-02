@@ -44,6 +44,11 @@ public class GameScenario : MonoBehaviour {
 
         //Timer over = Game over 
         if (timer.TimeOver) {
+            mapManager.PrintScores();
+            float rawScore = mapManager.ComputeScore();
+            float meanScore = mapManager.ComputeMeanScore();
+            float sdScore = mapManager.ComputeStandardDeviationScore();
+            Debug.Log("rawScore = " + rawScore + ", mean = " + meanScore + ", sd = " + sdScore);
             EndGameStats.FINAL_SCORE = mapManager.ComputeScore();
             SceneManager.LoadScene("gameover");
         }
