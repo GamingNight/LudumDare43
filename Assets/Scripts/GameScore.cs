@@ -29,7 +29,7 @@ public class GameScore : MonoBehaviour {
 		//The greater is the standard deviation, the lower is the multiplier
 		homogeneityCoef = 5 * ((1 + (middleScore - sdScore) / middleScore) / 2f);
 
-		//coefText.text = homogeneityCoef.ToString ();
+		coefText.text = homogeneityCoef.ToString ();
 
 
 	}
