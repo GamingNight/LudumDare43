@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour {
     private TileData.StepName activeEffect;
     private bool windEffectIsAvailable;
     private bool sunEffectIsAvailable;
-    private AudioSource audioSource;
+    private AudioFade audioFadeSource;
 
     void Start() {
 
@@ -42,8 +42,8 @@ public class MapManager : MonoBehaviour {
             }
         }
         activeEffect = TileData.StepName.RAIN;
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = particleEffectClips[0];
+        audioFadeSource = GetComponent<AudioFade>();
+        audioFadeSource.clip = particleEffectClips[0];
         windEffectIsAvailable = false;
         sunEffectIsAvailable = false;
     }
@@ -85,32 +85,32 @@ public class MapManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) {
             if (windEffectIsAvailable) {
                 particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Stop();
-                audioSource.Stop();
+                audioFadeSource.StopWithFadeOut();
             }
             if (activeEffect == TileData.StepName.RAIN) {
                 if (windEffectIsAvailable) {
                     activeEffect = TileData.StepName.WIND;
                     particleEffectIcons[0].Unselect();
                     particleEffectIcons[1].Select();
-                    audioSource.clip = particleEffectClips[1];
+                    audioFadeSource.clip = particleEffectClips[1];
                 }
             } else if (activeEffect == TileData.StepName.WIND) {
                 if (sunEffectIsAvailable) {
                     activeEffect = TileData.StepName.SUN;
                     particleEffectIcons[1].Unselect();
                     particleEffectIcons[2].Select();
-                    audioSource.clip = particleEffectClips[2];
+                    audioFadeSource.clip = particleEffectClips[2];
                 } else {
                     activeEffect = TileData.StepName.RAIN;
                     particleEffectIcons[1].Unselect();
                     particleEffectIcons[0].Select();
-                    audioSource.clip = particleEffectClips[0];
+                    audioFadeSource.clip = particleEffectClips[0];
                 }
             } else if (activeEffect == TileData.StepName.SUN) {
                 activeEffect = TileData.StepName.RAIN;
                 particleEffectIcons[2].Unselect();
                 particleEffectIcons[0].Select();
-                audioSource.clip = particleEffectClips[0];
+                audioFadeSource.clip = particleEffectClips[0];
             }
         }
 
@@ -145,11 +145,12 @@ public class MapManager : MonoBehaviour {
         if (mouseDetected && Input.GetMouseButton(0)) {
             if (!particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().isPlaying)
                 particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Play();
-            if (!audioSource.isPlaying)
-                audioSource.Play();
+            if (!audioFadeSource.isPlaying || audioFadeSource.isFadingOut)
+                audioFadeSource.PlayWithFadeIn();
         } else {
             particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Stop();
-            audioSource.Stop();
+            if (audioFadeSource.isPlaying && !audioFadeSource.isFadingOut)
+                audioFadeSource.StopWithFadeOut();
         }
 
         //Update all tile values depending on particle effect type
