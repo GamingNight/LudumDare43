@@ -217,8 +217,8 @@ public class MapManager : MonoBehaviour {
 
 	public float TerritoryEqualityBonus() {
 
-		int nbSteps = 9;
-		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int nbSteps = 15;
+		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 		for (int i = 0; i < mapSize; i++) {
 			for (int j = 0; j < mapSize; j++) {
@@ -228,9 +228,10 @@ public class MapManager : MonoBehaviour {
 				scoreSteps[steps] = scoreSteps [steps] + 1;
 			}
 		}
-		int bonus = 0;
+		int bonus = 1;
 
-		for (int i = 1; i < mapSize; i++) {
+		// Do not count empty tile -> start at 1
+		for (int i = 1; i < nbSteps; i++) {
 			if (bonus < scoreSteps [i]) {
 				bonus = scoreSteps [i];
 			}

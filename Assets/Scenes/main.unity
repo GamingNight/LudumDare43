@@ -915,6 +915,8 @@ MonoBehaviour:
   mapManager: {fileID: 707705787}
   scoreText: {fileID: 1250209298}
   coefText: {fileID: 912303574}
+  totalScore: 0
+  homogeneityCoef: 0
 --- !u!1 &1250209296
 GameObject:
   m_ObjectHideFlags: 0

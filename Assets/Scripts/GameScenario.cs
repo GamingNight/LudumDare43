@@ -15,11 +15,12 @@ public class GameScenario : MonoBehaviour {
     public GameObject elementControlIcon;
     private ScenarioState state;
     private GameTimer timer;
-
+	private GameScore currentScore;
 
     void Start() {
         state = ScenarioState.Enter;
         timer = GetComponent<GameTimer>();
+		currentScore = GetComponent<GameScore>();
     }
 
     void Update() {
@@ -63,16 +64,8 @@ public class GameScenario : MonoBehaviour {
 
         //Time over = Game over 
         if (timer.TimeOver) {
-            float rawScore = mapManager.ComputeScore();
-            float sdScore = mapManager.ComputeStandardDeviationScore();
-            TileData.TileStep[] steps = mapManager.Map[0][0].GetComponent<TileData>().steps;
-            int maxScore = steps[steps.Length - 1].value + 100;
-            float middleScore = maxScore / 2f;
-            sdScore = Mathf.Min(sdScore, middleScore);
-            //The greater is the standard deviation, the lower is the multiplier
-            float scoreMultiplier = 5 * ((1 + (middleScore - sdScore) / middleScore) / 2f);
-            EndGameStats.RAW_SCORE = rawScore;
-            EndGameStats.HOMOGENEITY_MULTIPLIER = scoreMultiplier;
+			EndGameStats.RAW_SCORE = (float)currentScore.totalScore;
+			EndGameStats.HOMOGENEITY_MULTIPLIER = currentScore.homogeneityCoef;
             SceneManager.LoadScene("gameover");
         }
     }
