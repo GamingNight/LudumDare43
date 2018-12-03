@@ -13,6 +13,7 @@ public class StartSceneScenario : MonoBehaviour {
     public GameObject blackScreen;
     public GameObject menu;
     public GameObject intro;
+    public GameObject greyScreen;
 
     private Coroutine currentRoutine;
     private MenuState currentState;
@@ -108,11 +109,13 @@ public class StartSceneScenario : MonoBehaviour {
     private IEnumerator IntroFadeOutCoroutine(float lerpDuration) {
 
         Image introImage = intro.GetComponent<Image>();
+        Image greyImage = greyScreen.GetComponent<Image>();
         menu.SetActive(true);
         float step = 0;
         while (step < lerpDuration) {
             float lerp = Mathf.Lerp(1, 0, step / lerpDuration);
             introImage.color = new Color(introImage.color.r, introImage.color.g, introImage.color.b, lerp);
+            greyImage.color = new Color(greyImage.color.r, greyImage.color.g, greyImage.color.b, lerp);
             step += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
