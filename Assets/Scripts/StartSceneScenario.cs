@@ -52,6 +52,7 @@ public class StartSceneScenario : MonoBehaviour {
             logo.SetActive(false);
             blackScreen.SetActive(false);
             intro.SetActive(false);
+            greyScreen.SetActive(false);
             currentState = MenuState.NONE;
         }
     }
