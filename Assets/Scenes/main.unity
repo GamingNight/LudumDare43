@@ -613,9 +613,9 @@ MonoBehaviour:
   - {fileID: 136326930}
   - {fileID: 226329022}
   particleEffectClips:
-  - {fileID: 8300000, guid: 58c02411305f9b7489e2debea6d5194e, type: 3}
-  - {fileID: 8300000, guid: 03034f172f19fef44b2aef0e5f7635fa, type: 3}
-  - {fileID: 8300000, guid: 14a08fa245c276d428356702cbd50bb4, type: 3}
+  - {fileID: 8300000, guid: ca35a65802d26a449acac13fdcd61484, type: 3}
+  - {fileID: 8300000, guid: b966f99658c0eab469f3c0eac2ead674, type: 3}
+  - {fileID: 8300000, guid: db6f296bb06a02842a2e053c7b1bf901, type: 3}
 --- !u!82 &707705788
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1431,7 +1431,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 43fd9d0805cf42d48a1a93991d580ebb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 87374b5870a3ec84c920cd0b4c755522, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
