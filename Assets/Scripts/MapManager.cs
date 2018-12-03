@@ -216,15 +216,20 @@ public class MapManager : MonoBehaviour {
     }
 
 	public float TerritoryEqualityBonus() {
-
-		int nbSteps = 15;
-		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		// Fixme 12 is the number of step
+		// please update if you update scoreSteps and scoreSteps_ref
+		int nbSteps = 11;
+		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int[] scoreSteps_ref = new int[] {0, 50, 100, 200, 300, 320, 400, 550, 700, 720, 850, 1000};
 
 		for (int i = 0; i < mapSize; i++) {
 			for (int j = 0; j < mapSize; j++) {
 				float score = map[i][j].GetComponent<TileData>().Value;
-				int steps = (int)(score / 100);
-				steps = (steps > nbSteps) ? nbSteps : steps;
+				int steps = 0;
+				for (int k = 0; k < nbSteps; k++) {
+					if (score > scoreSteps_ref [k])
+						steps = k;
+				}
 				scoreSteps[steps] = scoreSteps [steps] + 1;
 			}
 		}
