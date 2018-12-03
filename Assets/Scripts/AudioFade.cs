@@ -19,8 +19,12 @@ public class AudioFade : MonoBehaviour {
     public bool isFadingOut { get { return isFadeOutRunning; } }
     public bool isFadingIn { get { return isFadeInRunning; } }
 
-    private void Start() {
+    private void Awake() {
+
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start() {
         initVolume = audioSource.volume;
         fadeInCoroutine = null;
         fadeOutCoroutine = null;
