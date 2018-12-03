@@ -19,7 +19,7 @@ public class GameScore : MonoBehaviour {
 
 		// new bonus
 		homogeneityCoef = mapManager.TerritoryEqualityBonus();
-		coefText.text = homogeneityCoef.ToString ();
+		coefText.text = "x" + homogeneityCoef.ToString ();
 
 		// old bonus
 		// float sdScore = mapManager.ComputeStandardDeviationScore();
