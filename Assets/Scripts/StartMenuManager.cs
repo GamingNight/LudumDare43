@@ -7,12 +7,6 @@ public class StartMenuManager : MonoBehaviour {
 
     public HighlightTextMenu startMenuHighlight;
     public HighlightTextMenu quitMenuHighlight;
-    public Texture2D cursor;
-
-    private void Start() {
-
-        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
-    }
 
     void Update() {
 
