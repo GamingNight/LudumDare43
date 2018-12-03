@@ -22,7 +22,7 @@ public class StartSceneScenario : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) {
             StopCoroutine(currentRoutine);
             menu.SetActive(true);
             currentState = MenuState.MENU;
