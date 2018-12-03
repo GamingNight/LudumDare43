@@ -261,7 +261,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1015905376
 GameObject:
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014732605}
+      - m_Target: {fileID: 2076375614}
         m_MethodName: LoadMainScene
         m_Mode: 1
         m_Arguments:
@@ -521,7 +521,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325147258
 GameObject:
@@ -686,7 +686,6 @@ GameObject:
   - component: {fileID: 2014732603}
   - component: {fileID: 2014732602}
   - component: {fileID: 2014732601}
-  - component: {fileID: 2014732605}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -767,27 +766,13 @@ RectTransform:
   - {fileID: 2053821201}
   - {fileID: 1091205503}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2014732605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2014732600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a030bce6627d524fb90fe69ef1a9f1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawScoreText: {fileID: 2046018205}
-  bonusText: {fileID: 1325147260}
-  totalScoreText: {fileID: 2053821202}
 --- !u!1 &2046018203
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,3 +923,50 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2053821200}
   m_CullTransparentMesh: 0
+--- !u!1 &2076375613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2076375615}
+  - component: {fileID: 2076375614}
+  m_Layer: 0
+  m_Name: GameOverManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2076375614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2076375613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a030bce6627d524fb90fe69ef1a9f1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rawScoreText: {fileID: 2046018205}
+  bonusText: {fileID: 1325147260}
+  totalScoreText: {fileID: 2053821202}
+  gameOverTilePrefab: {fileID: 1693364327209450, guid: 51fe1b98da0ba954c9d6a9aedd5f9b41,
+    type: 2}
+  tileHeight: 4
+  tileWidth: 5
+--- !u!4 &2076375615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2076375613}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

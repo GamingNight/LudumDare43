@@ -66,6 +66,13 @@ public class GameScenario : MonoBehaviour {
         if (timer.TimeOver) {
             EndGameStats.RAW_SCORE = (float)currentScore.totalScore;
             EndGameStats.HOMOGENEITY_MULTIPLIER = currentScore.homogeneityCoef;
+            EndGameStats.SPRITES = new Sprite[mapManager.mapSize][];
+            for (i = 0; i < mapManager.mapSize; i++) {
+                EndGameStats.SPRITES[i] = new Sprite[mapManager.mapSize];
+                for (int j = 0; j < mapManager.mapSize; j++) {
+                    EndGameStats.SPRITES[i][j] = mapManager.Map[i][j].GetComponent<TileData>().LastStep.sprite;
+                }
+            }
             SceneManager.LoadScene("gameover");
         }
     }
