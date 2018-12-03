@@ -15,12 +15,12 @@ public class GameScenario : MonoBehaviour {
     public GameObject elementControlIcon;
     private ScenarioState state;
     private GameTimer timer;
-	private GameScore currentScore;
+    private GameScore currentScore;
 
     void Start() {
         state = ScenarioState.Enter;
         timer = GetComponent<GameTimer>();
-		currentScore = GetComponent<GameScore>();
+        currentScore = GetComponent<GameScore>();
     }
 
     void Update() {
@@ -33,7 +33,7 @@ public class GameScenario : MonoBehaviour {
             if (middleTileData.Value >= 320) {
                 InitCrossTilesState();
                 ReleaseWindEffect();
-                 state = ScenarioState.CrossTiles;
+                state = ScenarioState.CrossTiles;
             }
         } else if (state == ScenarioState.CrossTiles) {
             TileData middleTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2].GetComponent<TileData>();
@@ -41,7 +41,7 @@ public class GameScenario : MonoBehaviour {
             TileData downTileData = mapManager.Map[mapManager.mapSize / 2][mapManager.mapSize / 2 - 1].GetComponent<TileData>();
             TileData leftTileData = mapManager.Map[mapManager.mapSize / 2 - 1][mapManager.mapSize / 2].GetComponent<TileData>();
             TileData rightTileData = mapManager.Map[mapManager.mapSize / 2 + 1][mapManager.mapSize / 2].GetComponent<TileData>();
-            if (middleTileData.Value >= 320 && upTileData.Value >= 320 && downTileData.Value >= 320 && leftTileData.Value >= 320 && rightTileData.Value >= 320) {
+            if (middleTileData.Value >= 300 && upTileData.Value >= 300 && downTileData.Value >= 300 && leftTileData.Value >= 300 && rightTileData.Value >= 300) {
                 InitAllTilesState();
                 state = ScenarioState.AllTiles;
             }
@@ -64,8 +64,8 @@ public class GameScenario : MonoBehaviour {
 
         //Time over = Game over 
         if (timer.TimeOver) {
-			EndGameStats.RAW_SCORE = (float)currentScore.totalScore;
-			EndGameStats.HOMOGENEITY_MULTIPLIER = currentScore.homogeneityCoef;
+            EndGameStats.RAW_SCORE = (float)currentScore.totalScore;
+            EndGameStats.HOMOGENEITY_MULTIPLIER = currentScore.homogeneityCoef;
             SceneManager.LoadScene("gameover");
         }
     }

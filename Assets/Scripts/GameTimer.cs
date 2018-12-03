@@ -18,7 +18,7 @@ public class GameTimer : MonoBehaviour {
         currentTime = 0;
         timeOver = false;
         //Change speed of clock accordingly to the total game time.
-        //Regular speed is 1 and corresponds to 60 frames per second.
+        //Regular animation speed is 1 and corresponds to 60 frames per second.
         clockAnimator.speed /= totalTime;
     }
 

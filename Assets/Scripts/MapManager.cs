@@ -12,14 +12,16 @@ public class MapManager : MonoBehaviour {
     public GameObject selectorPrefab;
     public GameObject[] particleEffectPrefabs;
     public SelectIcon[] particleEffectIcons;
+    public AudioClip[] particleEffectClips;
 
     private GameObject[][] map;
     public GameObject[][] Map { get { return map; } }
     private GameObject selector;
     private Dictionary<TileData.StepName, GameObject> particleEffects;
-    private TileData.StepName activeParticleType;
+    private TileData.StepName activeEffect;
     private bool windEffectIsAvailable;
     private bool sunEffectIsAvailable;
+    private AudioSource audioSource;
 
     void Start() {
 
@@ -39,8 +41,9 @@ public class MapManager : MonoBehaviour {
                 particleEffects[TileData.StepName.SUN].GetComponentInChildren<ParticleSystem>().Stop();
             }
         }
-        activeParticleType = TileData.StepName.RAIN;
-
+        activeEffect = TileData.StepName.RAIN;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = particleEffectClips[0];
         windEffectIsAvailable = false;
         sunEffectIsAvailable = false;
     }
@@ -80,28 +83,34 @@ public class MapManager : MonoBehaviour {
 
         //Change selected particle effect as soon as player press Space
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) {
-            if (windEffectIsAvailable)
-                particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
-            if (activeParticleType == TileData.StepName.RAIN) {
+            if (windEffectIsAvailable) {
+                particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Stop();
+                audioSource.Stop();
+            }
+            if (activeEffect == TileData.StepName.RAIN) {
                 if (windEffectIsAvailable) {
-                    activeParticleType = TileData.StepName.WIND;
+                    activeEffect = TileData.StepName.WIND;
                     particleEffectIcons[0].Unselect();
                     particleEffectIcons[1].Select();
+                    audioSource.clip = particleEffectClips[1];
                 }
-            } else if (activeParticleType == TileData.StepName.WIND) {
+            } else if (activeEffect == TileData.StepName.WIND) {
                 if (sunEffectIsAvailable) {
-                    activeParticleType = TileData.StepName.SUN;
+                    activeEffect = TileData.StepName.SUN;
                     particleEffectIcons[1].Unselect();
                     particleEffectIcons[2].Select();
+                    audioSource.clip = particleEffectClips[2];
                 } else {
-                    activeParticleType = TileData.StepName.RAIN;
+                    activeEffect = TileData.StepName.RAIN;
                     particleEffectIcons[1].Unselect();
                     particleEffectIcons[0].Select();
+                    audioSource.clip = particleEffectClips[0];
                 }
-            } else if (activeParticleType == TileData.StepName.SUN) {
-                activeParticleType = TileData.StepName.RAIN;
+            } else if (activeEffect == TileData.StepName.SUN) {
+                activeEffect = TileData.StepName.RAIN;
                 particleEffectIcons[2].Unselect();
                 particleEffectIcons[0].Select();
+                audioSource.clip = particleEffectClips[0];
             }
         }
 
@@ -117,7 +126,7 @@ public class MapManager : MonoBehaviour {
                 if (mouseDetector.MouseIsOver) {
                     selector.transform.position = map[i][j].transform.position;
                     selector.SetActive(true);
-                    particleEffects[activeParticleType].transform.position = map[i][j].transform.position;
+                    particleEffects[activeEffect].transform.position = map[i][j].transform.position;
                     mouseDetected = true;
                     mouseTileI = i;
                     mouseTileJ = j;
@@ -134,10 +143,13 @@ public class MapManager : MonoBehaviour {
 
         //Activate particle effect if player presses mouse left button
         if (mouseDetected && Input.GetMouseButton(0)) {
-            if (!particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().isPlaying)
-                particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Play();
+            if (!particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().isPlaying)
+                particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Play();
+            if (!audioSource.isPlaying)
+                audioSource.Play();
         } else {
-            particleEffects[activeParticleType].GetComponentInChildren<ParticleSystem>().Stop();
+            particleEffects[activeEffect].GetComponentInChildren<ParticleSystem>().Stop();
+            audioSource.Stop();
         }
 
         //Update all tile values depending on particle effect type
@@ -146,7 +158,7 @@ public class MapManager : MonoBehaviour {
                 bool increaseValue = false;
                 bool effectTypeIsCompatible = false;
                 if (map[i][j].GetComponent<TileData>().LastStep != null)
-                    effectTypeIsCompatible = map[i][j].GetComponent<TileData>().LastStep.name.ToString().Contains(activeParticleType.ToString());
+                    effectTypeIsCompatible = map[i][j].GetComponent<TileData>().LastStep.name.ToString().Contains(activeEffect.ToString());
                 //bool effectTypeIsCompatible = activeParticleType == map[i][j].GetComponent<TileData>().LastStep.name;
                 if (Input.GetMouseButton(0) && i == mouseTileI && j == mouseTileJ && effectTypeIsCompatible) {
                     increaseValue = true;
@@ -215,35 +227,35 @@ public class MapManager : MonoBehaviour {
         return sd;
     }
 
-	public float TerritoryEqualityBonus() {
-		// Fixme 12 is the number of step
-		// please update if you update scoreSteps and scoreSteps_ref
-		int nbSteps = 11;
-		int[] scoreSteps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		int[] scoreSteps_ref = new int[] {0, 50, 100, 200, 300, 320, 400, 550, 700, 720, 850, 1000};
+    public float TerritoryEqualityBonus() {
+        // Fixme 12 is the number of step
+        // please update if you update scoreSteps and scoreSteps_ref
+        int nbSteps = 11;
+        int[] scoreSteps = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] scoreSteps_ref = new int[] { 0, 50, 100, 200, 300, 320, 400, 550, 700, 720, 850, 1000 };
 
-		for (int i = 0; i < mapSize; i++) {
-			for (int j = 0; j < mapSize; j++) {
-				float score = map[i][j].GetComponent<TileData>().Value;
-				int steps = 0;
-				for (int k = 0; k < nbSteps; k++) {
-					if (score > scoreSteps_ref [k])
-						steps = k;
-				}
-				scoreSteps[steps] = scoreSteps [steps] + 1;
-			}
-		}
-		int bonus = 1;
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                float score = map[i][j].GetComponent<TileData>().Value;
+                int steps = 0;
+                for (int k = 0; k < nbSteps; k++) {
+                    if (score > scoreSteps_ref[k])
+                        steps = k;
+                }
+                scoreSteps[steps] = scoreSteps[steps] + 1;
+            }
+        }
+        int bonus = 1;
 
-		// Do not count empty tile -> start at 1
-		for (int i = 1; i < nbSteps; i++) {
-			if (bonus < scoreSteps [i]) {
-				bonus = scoreSteps [i];
-			}
-		}
-		return (float) bonus;
+        // Do not count empty tile -> start at 1
+        for (int i = 1; i < nbSteps; i++) {
+            if (bonus < scoreSteps[i]) {
+                bonus = scoreSteps[i];
+            }
+        }
+        return (float)bonus;
 
-	}
+    }
 
 
     public void PrintScores() {
