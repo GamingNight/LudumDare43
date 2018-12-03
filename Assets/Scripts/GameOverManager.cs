@@ -18,7 +18,7 @@ public class GameOverManager : MonoBehaviour {
         int intRawScore = (int)EndGameStats.RAW_SCORE;
         rawScoreText.text = "Score: " + intRawScore;
         float roundedMultiplier = ((int)(10 * EndGameStats.HOMOGENEITY_MULTIPLIER)) / 10f;
-        bonusText.text = "Territory Equality Bonus: x" + roundedMultiplier;
+        bonusText.text = "Social Harmony Bonus: x" + roundedMultiplier;
         totalScoreText.text = "Total Score: " + (intRawScore * roundedMultiplier);
 
         GenerateSpriteMap();
