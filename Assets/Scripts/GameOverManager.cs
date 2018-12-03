@@ -16,16 +16,20 @@ public class GameOverManager : MonoBehaviour {
     void Start() {
 
         int intRawScore = (int)EndGameStats.RAW_SCORE;
-        rawScoreText.text = "Score: " + intRawScore;
+        rawScoreText.text = intRawScore.ToString();
         float roundedMultiplier = ((int)(10 * EndGameStats.HOMOGENEITY_MULTIPLIER)) / 10f;
-        bonusText.text = "Social Harmony Bonus: x" + roundedMultiplier;
-        totalScoreText.text = "Total Score: " + (intRawScore * roundedMultiplier);
+        bonusText.text = "x" + roundedMultiplier;
+        totalScoreText.text = (intRawScore * roundedMultiplier).ToString();
 
         GenerateSpriteMap();
     }
 
     public void LoadMainScene() {
         SceneManager.LoadScene("main");
+    }
+
+    public void Quit() {
+        Application.Quit();
     }
 
     private void GenerateSpriteMap() {
