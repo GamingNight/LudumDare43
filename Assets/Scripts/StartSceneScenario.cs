@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class StartSceneScenario : MonoBehaviour {
 
     public enum MenuState {
-        LOGO_FADE_IN, LOGO_WAIT, LOGO_FADE_OUT, BLACK_SCREEN_FADE_OUT, MENU, NONE
+        LOGO_FADE_IN, LOGO_WAIT, LOGO_FADE_OUT, BLACK_SCREEN_FADE_OUT, INTRO_WAIT, INTRO_FADE_OUT, MENU, NONE
     }
 
     public GameObject logo;
     public GameObject blackScreen;
     public GameObject menu;
+    public GameObject intro;
 
     private Coroutine currentRoutine;
     private MenuState currentState;
@@ -32,7 +33,7 @@ public class StartSceneScenario : MonoBehaviour {
             currentRoutine = StartCoroutine(LogoFadeInCoroutine(2f));
             currentState = MenuState.NONE;
         } else if (currentState == MenuState.LOGO_WAIT) {
-            currentRoutine = StartCoroutine(LogoWaitCoroutine(1f));
+            currentRoutine = StartCoroutine(LogoWaitCoroutine(0.5f));
             currentState = MenuState.NONE;
         } else if (currentState == MenuState.LOGO_FADE_OUT) {
             currentRoutine = StartCoroutine(LogoFadeOutCoroutine(2f));
@@ -40,9 +41,16 @@ public class StartSceneScenario : MonoBehaviour {
         } else if (currentState == MenuState.BLACK_SCREEN_FADE_OUT) {
             currentRoutine = StartCoroutine(BlackScreenFadeOutCoroutine(0.5f));
             currentState = MenuState.NONE;
+        } else if (currentState == MenuState.INTRO_WAIT) {
+            currentRoutine = StartCoroutine(IntroWaitCoroutine(15f));
+            currentState = MenuState.NONE;
+        } else if (currentState == MenuState.INTRO_FADE_OUT) {
+            currentRoutine = StartCoroutine(IntroFadeOutCoroutine(0.5f));
+            currentState = MenuState.NONE;
         } else if (currentState == MenuState.MENU) {
             logo.SetActive(false);
             blackScreen.SetActive(false);
+            intro.SetActive(false);
             currentState = MenuState.NONE;
         }
     }
@@ -86,6 +94,25 @@ public class StartSceneScenario : MonoBehaviour {
         while (step < lerpDuration) {
             float lerp = Mathf.Lerp(1, 0, step / lerpDuration);
             blackScreenImage.color = new Color(blackScreenImage.color.r, blackScreenImage.color.g, blackScreenImage.color.b, lerp);
+            step += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        currentState = MenuState.INTRO_WAIT;
+    }
+
+    private IEnumerator IntroWaitCoroutine(float duration) {
+        yield return new WaitForSeconds(duration);
+        currentState = MenuState.INTRO_FADE_OUT;
+    }
+
+    private IEnumerator IntroFadeOutCoroutine(float lerpDuration) {
+
+        Image introImage = intro.GetComponent<Image>();
+        menu.SetActive(true);
+        float step = 0;
+        while (step < lerpDuration) {
+            float lerp = Mathf.Lerp(1, 0, step / lerpDuration);
+            introImage.color = new Color(introImage.color.r, introImage.color.g, introImage.color.b, lerp);
             step += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
